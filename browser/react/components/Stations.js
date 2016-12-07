@@ -3,8 +3,7 @@ import { Link } from 'react-router';
 import store from '../store';
 
 export default props => {
-
-  const STATIONS_DATA = props.stations;
+    const STATIONS_DATA = props.stations;
 
   return (
     <div>
@@ -14,7 +13,7 @@ export default props => {
         Object.keys(STATIONS_DATA).map(genre => {
           return (
             <div className="list-group-item" key={genre}>
-              <Link to={'fill/me/in/later'}>{genre}</Link>
+              <Link to={`/stations/${genre}`}>{genre}</Link>
             </div>
           );
         })
