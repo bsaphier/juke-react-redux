@@ -4,21 +4,17 @@ import store from '../store';
 
 export default props => {
 
-  const DUMMY_STATIONS_DATA = [
-    { name: '90s Hip Hop' },
-    { name: 'Death Metal' },
-    { name: 'Classical' }
-  ];
+  const STATIONS_DATA = props.stations;
 
   return (
     <div>
       <h3>Stations</h3>
       <div className="list-group">
       {
-        DUMMY_STATIONS_DATA.map(station => {
+        Object.keys(STATIONS_DATA).map(genre => {
           return (
-            <div className="list-group-item" key={station.name}>
-              <Link to={'fill/me/in/later'}>{station.name}</Link>
+            <div className="list-group-item" key={genre}>
+              <Link to={'fill/me/in/later'}>{genre}</Link>
             </div>
           );
         })

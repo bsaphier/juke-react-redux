@@ -44,7 +44,7 @@ export const addNewPlaylist = playlistName => {
       .then(playlist => {
         const newListOfPlaylists = getState().playlists.list.concat([playlist]);
         dispatch(receivePlaylists(newListOfPlaylists));
-        hashHistory.push(`/playlists/${playlist.id}`)
+        hashHistory.push(`/playlists/${playlist.id}`);
       });
 
   };
