@@ -8,7 +8,6 @@ import { loadAllSongs, addSongToPlaylist } from '../action-creators/playlists';
 const mapStateToProps = state => {
   return {
     playlistId: state.playlists.selected.id,
-    songId: state.songId,
     songs: state.songs
   };
 };
@@ -45,7 +44,7 @@ class AddSongContainer extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
-    const playlistId = this.props.playlists;
+    const playlistId = this.props.playlistId;
     const songId = this.state.songId;
     this.props.addSongToPlaylist(playlistId, songId)
       .catch(() => this.setState({ error: true }));
