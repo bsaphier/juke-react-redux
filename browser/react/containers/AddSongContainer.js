@@ -1,32 +1,39 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import AddSong from '../components/AddSong';
-import store from '../store';
-import {loadAllSongs, addSongToPlaylist} from '../action-creators/playlists';
+import { loadAllSongs, addSongToPlaylist } from '../action-creators/playlists';
 
-class AddSongContainer extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = Object.assign({
+const mapStateToProps = state => {
+  return {
+    playlistId: state.playlists.selected.id,
+    songId: state.songId,
+    songs: state.songs
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addSongToPlaylist: (playlistId, songId) => dispatch(addSongToPlaylist(playlistId, songId)),
+    loadAllSongs: () => dispatch(loadAllSongs())
+  };
+};
+
+class AddSongContainer extends Component {
+
+  constructor() {
+    super();
+    this.state = {
       songId: 1,
       error: false
-    }, store.getState());
+    };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
-
-    this.unsubscribe = store.subscribe(() => {
-      this.setState(store.getState());
-    });
-
-    store.dispatch(loadAllSongs());
-
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
+    this.props.loadAllSongs();
   }
 
   handleChange(evt) {
@@ -37,31 +44,22 @@ class AddSongContainer extends React.Component {
   }
 
   handleSubmit(evt) {
-
     evt.preventDefault();
-
-    const playlistId = this.state.playlists.selected.id;
+    const playlistId = this.props.playlists;
     const songId = this.state.songId;
-
-    store.dispatch(addSongToPlaylist(playlistId, songId))
+    this.props.addSongToPlaylist(playlistId, songId)
       .catch(() => this.setState({ error: true }));
-
   }
 
   render() {
-
-    const songs = this.state.songs;
-    const error = this.state.error;
-
     return (
       <AddSong
+        {...this.state}
         {...this.props}
-        songs={songs}
-        error={error}
         handleChange={this.handleChange}
         handleSubmit={this.handleSubmit}/>
     );
   }
 }
 
-export default AddSongContainer;
+export default connect(mapStateToProps, mapDispatchToProps)(AddSongContainer);

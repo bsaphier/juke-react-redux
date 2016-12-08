@@ -28335,7 +28335,6 @@
 	});
 	
 	exports.default = function (props) {
-	
 	  var songs = props.songs;
 	  var currentSong = props.currentSong;
 	  var isPlaying = props.isPlaying;
@@ -28615,17 +28614,7 @@
 	  value: true
 	});
 	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _store = __webpack_require__(271);
-	
-	var _store2 = _interopRequireDefault(_store);
+	var _reactRedux = __webpack_require__(233);
 	
 	var _Artist = __webpack_require__(286);
 	
@@ -28635,57 +28624,26 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	var mapStateToProps = function mapStateToProps(state, ownProps) {
+	  return {
+	    children: ownProps.children.props.children,
+	    selectedArtist: state.artists.selected,
+	    currentSong: state.player.currentSong,
+	    currentSongList: state.player.currentSongList,
+	    isPLaying: state.player.isPlaying,
+	    progress: state.player.progress
+	  };
+	};
 	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var _class = function (_Component) {
-	  _inherits(_class, _Component);
-	
-	  function _class() {
-	    _classCallCheck(this, _class);
-	
-	    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
-	
-	    _this.state = _store2.default.getState();
-	    return _this;
-	  }
-	
-	  _createClass(_class, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _this2 = this;
-	
-	      this.unsubscribe = _store2.default.subscribe(function () {
-	        _this2.setState(_store2.default.getState());
-	      });
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    toggleOne: function toggleOne(song, list) {
+	      return dispatch((0, _player.toggleSong)(song, list));
 	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      this.unsubscribe();
-	    }
-	  }, {
-	    key: 'toggle',
-	    value: function toggle(song, list) {
-	      _store2.default.dispatch((0, _player.toggleSong)(song, list));
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(_Artist2.default, _extends({}, this.state.player, {
-	        selectedArtist: this.state.artists.selected,
-	        toggleOne: this.toggle,
-	        children: this.props.children.props.children }));
-	    }
-	  }]);
-
-	  return _class;
-	}(_react.Component);
-
-	exports.default = _class;
+	  };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Artist2.default);
 
 /***/ },
 /* 271 */
@@ -29964,8 +29922,6 @@
 	var _reactRouter = __webpack_require__(178);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	;
 
 /***/ },
 /* 287 */
@@ -29983,6 +29939,8 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _reactRedux = __webpack_require__(233);
+	
 	var _FilterInput = __webpack_require__(288);
 	
 	var _FilterInput2 = _interopRequireDefault(_FilterInput);
@@ -29990,10 +29948,6 @@
 	var _Artists = __webpack_require__(289);
 	
 	var _Artists2 = _interopRequireDefault(_Artists);
-	
-	var _store = __webpack_require__(271);
-	
-	var _store2 = _interopRequireDefault(_store);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -30003,38 +29957,32 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FilterableArtistsContainer = function (_React$Component) {
-	  _inherits(FilterableArtistsContainer, _React$Component);
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    list: state.artists.list
+	  };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {};
+	};
+	
+	var FilterableArtistsContainer = function (_Component) {
+	  _inherits(FilterableArtistsContainer, _Component);
 	
 	  function FilterableArtistsContainer() {
 	    _classCallCheck(this, FilterableArtistsContainer);
 	
 	    var _this = _possibleConstructorReturn(this, (FilterableArtistsContainer.__proto__ || Object.getPrototypeOf(FilterableArtistsContainer)).call(this));
 	
-	    _this.state = Object.assign({
+	    _this.state = {
 	      inputValue: ''
-	    }, _store2.default.getState().artists);
-	
+	    };
 	    _this.handleChange = _this.handleChange.bind(_this);
-	
 	    return _this;
 	  }
 	
 	  _createClass(FilterableArtistsContainer, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _this2 = this;
-	
-	      this.unsubscribe = _store2.default.subscribe(function () {
-	        _this2.setState(_store2.default.getState().artists);
-	      });
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      this.unsubscribe();
-	    }
-	  }, {
 	    key: 'handleChange',
 	    value: function handleChange(evt) {
 	      this.setState({
@@ -30044,9 +29992,8 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	
 	      var inputValue = this.state.inputValue;
-	      var filteredArtists = this.state.list.filter(function (artist) {
+	      var filteredArtists = this.props.list.filter(function (artist) {
 	        return artist.name.match(inputValue);
 	      });
 	
@@ -30063,9 +30010,9 @@
 	  }]);
 	
 	  return FilterableArtistsContainer;
-	}(_react2.default.Component);
+	}(_react.Component);
 	
-	exports.default = FilterableArtistsContainer;
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(FilterableArtistsContainer);
 
 /***/ },
 /* 288 */
@@ -32066,13 +32013,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _reactRedux = __webpack_require__(233);
+	
 	var _AddSong = __webpack_require__(321);
 	
 	var _AddSong2 = _interopRequireDefault(_AddSong);
-	
-	var _store = __webpack_require__(271);
-	
-	var _store2 = _interopRequireDefault(_store);
 	
 	var _playlists = __webpack_require__(292);
 	
@@ -32084,18 +32029,37 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var AddSongContainer = function (_React$Component) {
-	  _inherits(AddSongContainer, _React$Component);
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    playlistId: state.playlists.selected.id,
+	    songId: state.songId,
+	    songs: state.songs
+	  };
+	};
 	
-	  function AddSongContainer(props) {
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    addSongToPlaylist: function addSongToPlaylist(playlistId, songId) {
+	      return dispatch((0, _playlists.addSongToPlaylist)(playlistId, songId));
+	    },
+	    loadAllSongs: function loadAllSongs() {
+	      return dispatch((0, _playlists.loadAllSongs)());
+	    }
+	  };
+	};
+	
+	var AddSongContainer = function (_Component) {
+	  _inherits(AddSongContainer, _Component);
+	
+	  function AddSongContainer() {
 	    _classCallCheck(this, AddSongContainer);
 	
-	    var _this = _possibleConstructorReturn(this, (AddSongContainer.__proto__ || Object.getPrototypeOf(AddSongContainer)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (AddSongContainer.__proto__ || Object.getPrototypeOf(AddSongContainer)).call(this));
 	
-	    _this.state = Object.assign({
+	    _this.state = {
 	      songId: 1,
 	      error: false
-	    }, _store2.default.getState());
+	    };
 	    _this.handleChange = _this.handleChange.bind(_this);
 	    _this.handleSubmit = _this.handleSubmit.bind(_this);
 	    return _this;
@@ -32104,18 +32068,7 @@
 	  _createClass(AddSongContainer, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      var _this2 = this;
-	
-	      this.unsubscribe = _store2.default.subscribe(function () {
-	        _this2.setState(_store2.default.getState());
-	      });
-	
-	      _store2.default.dispatch((0, _playlists.loadAllSongs)());
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      this.unsubscribe();
+	      this.props.loadAllSongs();
 	    }
 	  }, {
 	    key: 'handleChange',
@@ -32128,36 +32081,28 @@
 	  }, {
 	    key: 'handleSubmit',
 	    value: function handleSubmit(evt) {
-	      var _this3 = this;
+	      var _this2 = this;
 	
 	      evt.preventDefault();
-	
-	      var playlistId = this.state.playlists.selected.id;
+	      var playlistId = this.props.playlists;
 	      var songId = this.state.songId;
-	
-	      _store2.default.dispatch((0, _playlists.addSongToPlaylist)(playlistId, songId)).catch(function () {
-	        return _this3.setState({ error: true });
+	      this.props.addSongToPlaylist(playlistId, songId).catch(function () {
+	        return _this2.setState({ error: true });
 	      });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	
-	      var songs = this.state.songs;
-	      var error = this.state.error;
-	
-	      return _react2.default.createElement(_AddSong2.default, _extends({}, this.props, {
-	        songs: songs,
-	        error: error,
+	      return _react2.default.createElement(_AddSong2.default, _extends({}, this.state, this.props, {
 	        handleChange: this.handleChange,
 	        handleSubmit: this.handleSubmit }));
 	    }
 	  }]);
 	
 	  return AddSongContainer;
-	}(_react2.default.Component);
+	}(_react.Component);
 	
-	exports.default = AddSongContainer;
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(AddSongContainer);
 
 /***/ },
 /* 321 */
@@ -32294,7 +32239,7 @@
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
 	    searchLyrics: function searchLyrics(artistQuery, songQuery) {
-	      dispatch((0, _lyrics.searchLyrics)(artistQuery, songQuery));
+	      return dispatch((0, _lyrics.searchLyrics)(artistQuery, songQuery));
 	    }
 	  };
 	};
@@ -32315,7 +32260,6 @@
 	    _this.handleSubmit = _this.handleSubmit.bind(_this);
 	    _this.handleArtistInput = _this.handleArtistInput.bind(_this);
 	    _this.handleSongInput = _this.handleSongInput.bind(_this);
-	
 	    return _this;
 	  }
 	
@@ -32341,7 +32285,6 @@
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(_Lyrics2.default, _extends({}, this.state, this.props, {
-	        // handleChange={this.handleChange}
 	        setArtist: this.handleArtistInput,
 	        setSong: this.handleSongInput,
 	        handleSubmit: this.handleSubmit

@@ -10,9 +10,9 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    searchLyrics: (artistQuery, songQuery) =>{ dispatch(searchLyrics(artistQuery, songQuery))}
+    searchLyrics: (artistQuery, songQuery) => dispatch(searchLyrics(artistQuery, songQuery))
   };
 };
 
@@ -28,7 +28,6 @@ class LyricsContainer extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleArtistInput = this.handleArtistInput.bind(this);
     this.handleSongInput = this.handleSongInput.bind(this);
-
   }
 
   handleArtistInput(artist) {
@@ -51,7 +50,6 @@ class LyricsContainer extends Component {
       <Lyrics
         {...this.state}
         {...this.props}
-        // handleChange={this.handleChange}
         setArtist={this.handleArtistInput}
         setSong={this.handleSongInput}
         handleSubmit={this.handleSubmit}
