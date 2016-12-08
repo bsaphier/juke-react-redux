@@ -28146,15 +28146,7 @@
 	  value: true
 	});
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _store = __webpack_require__(262);
-	
-	var _store2 = _interopRequireDefault(_store);
+	var _reactRedux = __webpack_require__(233);
 	
 	var _Albums = __webpack_require__(279);
 	
@@ -28162,49 +28154,19 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    albums: state.albums.list
+	  };
+	};
 	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {};
+	};
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	var AlbumsContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Albums2.default);
 	
-	var _class = function (_Component) {
-	  _inherits(_class, _Component);
-	
-	  function _class() {
-	    _classCallCheck(this, _class);
-	
-	    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
-	
-	    _this.state = _store2.default.getState().albums;
-	    return _this;
-	  }
-	
-	  _createClass(_class, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _this2 = this;
-	
-	      this.unsubscribe = _store2.default.subscribe(function () {
-	        _this2.setState(_store2.default.getState().albums);
-	      });
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      this.unsubscribe();
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(_Albums2.default, { albums: this.state.list });
-	    }
-	  }]);
-
-	  return _class;
-	}(_react.Component);
-
-	exports.default = _class;
+	exports.default = AlbumsContainer;
 
 /***/ },
 /* 262 */
@@ -29507,6 +29469,14 @@
 	  value: true
 	});
 	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(178);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	exports.default = function (props) {
 	
 	  var albums = props.albums;
@@ -29555,16 +29525,6 @@
 	    )
 	  );
 	};
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRouter = __webpack_require__(178);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	;
 
 /***/ },
 /* 280 */
@@ -29576,15 +29536,7 @@
 	  value: true
 	});
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _store = __webpack_require__(262);
-	
-	var _store2 = _interopRequireDefault(_store);
+	var _reactRedux = __webpack_require__(233);
 	
 	var _Album = __webpack_require__(281);
 	
@@ -29594,59 +29546,25 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    selectedAlbum: state.albums.selected,
+	    currentSong: state.player.currentSong,
+	    isPlaying: state.player.isPlaying
+	  };
+	};
 	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var _class = function (_Component) {
-	  _inherits(_class, _Component);
-	
-	  function _class() {
-	    _classCallCheck(this, _class);
-	
-	    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
-	
-	    _this.state = _store2.default.getState();
-	    return _this;
-	  }
-	
-	  _createClass(_class, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _this2 = this;
-	
-	      this.unsubscribe = _store2.default.subscribe(function () {
-	        _this2.setState(_store2.default.getState());
-	      });
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    toggleOne: function toggleOne(song, list) {
+	      dispatch((0, _player.toggleSong)(song, list));
 	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      this.unsubscribe();
-	    }
-	  }, {
-	    key: 'toggle',
-	    value: function toggle(song, list) {
-	      _store2.default.dispatch((0, _player.toggleSong)(song, list));
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(_Album2.default, {
-	        selectedAlbum: this.state.albums.selected,
-	        currentSong: this.state.player.currentSong,
-	        isPlaying: this.state.player.isPlaying,
-	        toggleOne: this.toggle
-	      });
-	    }
-	  }]);
-
-	  return _class;
-	}(_react.Component);
-
-	exports.default = _class;
+	  };
+	};
+	
+	var AlbumContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Album2.default);
+	
+	exports.default = AlbumContainer;
 
 /***/ },
 /* 281 */
@@ -29658,6 +29576,16 @@
 	  value: true
 	});
 	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Songs = __webpack_require__(282);
+	
+	var _Songs2 = _interopRequireDefault(_Songs);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	exports.default = function (props) {
 	
 	  var album = props.selectedAlbum;
@@ -29665,6 +29593,7 @@
 	  var isPlaying = props.isPlaying;
 	  var toggleOne = props.toggleOne;
 	
+	  console.log(props);
 	  return _react2.default.createElement(
 	    'div',
 	    { className: 'album' },
@@ -29685,16 +29614,6 @@
 	      toggleOne: toggleOne })
 	  );
 	};
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _Songs = __webpack_require__(282);
-	
-	var _Songs2 = _interopRequireDefault(_Songs);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
 /* 282 */
@@ -32350,6 +32269,8 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _reactRedux = __webpack_require__(233);
+	
 	var _store = __webpack_require__(262);
 	
 	var _store2 = _interopRequireDefault(_store);
@@ -32368,36 +32289,44 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var _class = function (_Component) {
-	  _inherits(_class, _Component);
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    lyrics: state.lyrics
+	  };
+	};
 	
-	  function _class() {
-	    _classCallCheck(this, _class);
+	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+	  return {
+	    handleSubmit: function handleSubmit(ev) {
+	      ev.preventDefault();
+	      if (ownProps.artistQuery && ownProps.songQuery) {
+	        dispatch((0, _lyrics.searchLyrics)(ownProps.artistQuery, ownProps.songQuery));
+	      }
+	    }
+	  };
+	};
 	
-	    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
+	var LyricsContainer = function (_Component) {
+	  _inherits(LyricsContainer, _Component);
 	
-	    _this.state = Object.assign({
+	  function LyricsContainer() {
+	    _classCallCheck(this, LyricsContainer);
+	
+	    var _this = _possibleConstructorReturn(this, (LyricsContainer.__proto__ || Object.getPrototypeOf(LyricsContainer)).call(this));
+	
+	    _this.state = {
 	      artistQuery: '',
 	      songQuery: ''
-	    }, _store2.default.getState());
+	    };
 	
-	    _this.handleSubmit = _this.handleSubmit.bind(_this);
+	    // this.handleSubmit = this.handleSubmit.bind(this);
 	    _this.handleArtistInput = _this.handleArtistInput.bind(_this);
 	    _this.handleSongInput = _this.handleSongInput.bind(_this);
 	
 	    return _this;
 	  }
 	
-	  _createClass(_class, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _this2 = this;
-	
-	      this.unsubscribe = _store2.default.subscribe(function () {
-	        _this2.setState(_store2.default.getState());
-	      });
-	    }
-	  }, {
+	  _createClass(LyricsContainer, [{
 	    key: 'handleArtistInput',
 	    value: function handleArtistInput(artist) {
 	      this.setState({ artistQuery: artist });
@@ -32407,34 +32336,32 @@
 	    value: function handleSongInput(song) {
 	      this.setState({ songQuery: song });
 	    }
-	  }, {
-	    key: 'handleSubmit',
-	    value: function handleSubmit(e) {
-	      e.preventDefault();
-	      if (this.state.artistQuery && this.state.songQuery) {
-	        _store2.default.dispatch((0, _lyrics.searchLyrics)(this.state.artistQuery, this.state.songQuery));
-	      }
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      this.unsubscribe();
-	    }
+	
+	    // handleSubmit(ev) {
+	    //   ev.preventDefault();
+	    //   if (this.state.artistQuery && this.state.songQuery) {
+	    //     store.dispatch(searchLyrics(this.state.artistQuery, this.state.songQuery));
+	    //   }
+	    // }
+	
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      console.log('PROPS', this.props);
 	      return _react2.default.createElement(_Lyrics2.default, _extends({}, this.state, {
+	        lyrics: this.props.lyrics,
 	        handleChange: this.handleChange,
 	        setArtist: this.handleArtistInput,
 	        setSong: this.handleSongInput,
-	        handleSubmit: this.handleSubmit }));
+	        handleSubmit: this.props.handleSubmit
+	      }));
 	    }
 	  }]);
-
-	  return _class;
+	
+	  return LyricsContainer;
 	}(_react.Component);
-
-	exports.default = _class;
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(LyricsContainer);
 
 /***/ },
 /* 323 */
@@ -32618,15 +32545,9 @@
 	
 	var _reactRouter = __webpack_require__(178);
 	
-	var _store = __webpack_require__(262);
-	
-	var _store2 = _interopRequireDefault(_store);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = function (props) {
-	  var STATIONS_DATA = props.stations;
-	
 	  return _react2.default.createElement(
 	    'div',
 	    null,
@@ -32638,7 +32559,7 @@
 	    _react2.default.createElement(
 	      'div',
 	      { className: 'list-group' },
-	      Object.keys(STATIONS_DATA).map(function (genre) {
+	      Object.keys(props.stations).map(function (genre) {
 	        return _react2.default.createElement(
 	          'div',
 	          { className: 'list-group-item', key: genre },
@@ -32714,7 +32635,6 @@
 	
 	exports.default = function (props) {
 	
-	  console.log("STATION", props);
 	  return _react2.default.createElement(
 	    'div',
 	    null,

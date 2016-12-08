@@ -2,9 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Station from '../components/Station';
-import {convertSong} from '../utils';
-import {toggleSong} from '../action-creators/player';
-
+import { convertSong } from '../utils';
+import { toggleSong } from '../action-creators/player';
 
 
 const mapStateToProps = (state, ownProps) => {

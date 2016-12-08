@@ -1,30 +1,41 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import store from '../store';
 import Lyrics from '../components/Lyrics';
+import { searchLyrics } from '../action-creators/lyrics';
 
-import {searchLyrics} from '../action-creators/lyrics';
 
-export default class extends Component {
+const mapStateToProps = state => {
+  return {
+    lyrics: state.lyrics
+  };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    handleSubmit: ev => {
+      ev.preventDefault();
+      if (ownProps.artistQuery && ownProps.songQuery) {
+        dispatch(searchLyrics(ownProps.artistQuery, ownProps.songQuery));
+      }
+    }
+  };
+};
+
+class LyricsContainer extends Component {
 
   constructor() {
-
     super();
-
-    this.state = Object.assign({
+    this.state = {
       artistQuery: '',
       songQuery: ''
-    }, store.getState());
+    };
 
-    this.handleSubmit = this.handleSubmit.bind(this);
+    // this.handleSubmit = this.handleSubmit.bind(this);
     this.handleArtistInput = this.handleArtistInput.bind(this);
     this.handleSongInput = this.handleSongInput.bind(this);
 
-  }
-
-  componentDidMount() {
-    this.unsubscribe = store.subscribe(() => {
-      this.setState(store.getState());
-    });
   }
 
   handleArtistInput(artist) {
@@ -35,26 +46,27 @@ export default class extends Component {
     this.setState({ songQuery: song });
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
-    if (this.state.artistQuery && this.state.songQuery) {
-      store.dispatch(searchLyrics(this.state.artistQuery, this.state.songQuery));
-    }
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
+  // handleSubmit(ev) {
+  //   ev.preventDefault();
+  //   if (this.state.artistQuery && this.state.songQuery) {
+  //     store.dispatch(searchLyrics(this.state.artistQuery, this.state.songQuery));
+  //   }
+  // }
 
   render() {
+    console.log('PROPS', this.props);
     return (
       <Lyrics
         {...this.state}
+        lyrics={this.props.lyrics}
         handleChange={this.handleChange}
         setArtist={this.handleArtistInput}
         setSong={this.handleSongInput}
-        handleSubmit={this.handleSubmit} />
+        handleSubmit={this.props.handleSubmit}
+      />
     );
   }
 
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(LyricsContainer);
