@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-import store from '../store';
 import Lyrics from '../components/Lyrics';
 import { searchLyrics } from '../action-creators/lyrics';
 
@@ -12,14 +10,9 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    handleSubmit: ev => {
-      ev.preventDefault();
-      if (ownProps.artistQuery && ownProps.songQuery) {
-        dispatch(searchLyrics(ownProps.artistQuery, ownProps.songQuery));
-      }
-    }
+    searchLyrics: (artistQuery, songQuery) =>{ dispatch(searchLyrics(artistQuery, songQuery))}
   };
 };
 
@@ -32,7 +25,7 @@ class LyricsContainer extends Component {
       songQuery: ''
     };
 
-    // this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleArtistInput = this.handleArtistInput.bind(this);
     this.handleSongInput = this.handleSongInput.bind(this);
 
@@ -46,23 +39,22 @@ class LyricsContainer extends Component {
     this.setState({ songQuery: song });
   }
 
-  // handleSubmit(ev) {
-  //   ev.preventDefault();
-  //   if (this.state.artistQuery && this.state.songQuery) {
-  //     store.dispatch(searchLyrics(this.state.artistQuery, this.state.songQuery));
-  //   }
-  // }
+  handleSubmit(ev) {
+    ev.preventDefault();
+    if (this.state.artistQuery && this.state.songQuery) {
+      this.props.searchLyrics(this.state.artistQuery, this.state.songQuery);
+    }
+  }
 
   render() {
-    console.log('PROPS', this.props);
     return (
       <Lyrics
         {...this.state}
-        lyrics={this.props.lyrics}
-        handleChange={this.handleChange}
+        {...this.props}
+        // handleChange={this.handleChange}
         setArtist={this.handleArtistInput}
         setSong={this.handleSongInput}
-        handleSubmit={this.props.handleSubmit}
+        handleSubmit={this.handleSubmit}
       />
     );
   }

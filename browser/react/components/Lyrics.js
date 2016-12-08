@@ -2,6 +2,7 @@ import React from 'react';
 
 export default function (props) {
 
+
   const text = props.lyrics.text;
   const artistQuery = props.artistQuery;
   const songQuery = props.songQuery;
